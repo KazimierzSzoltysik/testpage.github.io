@@ -1,1 +1,59 @@
 Testowa strona
+
+<script>
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+      const createHiddenField = ({ key, value }) => {
+        const hiddenField = document.createElement("input");
+        hiddenField.type = "hidden";
+        hiddenField.name = key;
+        hiddenField.value = value;
+        return hiddenField;
+      };
+
+      window.addEventListener(
+        "message",
+        (evt) => {
+          if (evt.origin !== window.location.origin) return;
+          const {
+            data: { action, url, token },
+          } = evt;
+          if (action === "alamar-wallet/portal/load") {
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = url;
+
+            form.appendChild(
+              createHiddenField({
+                key: "customer[token]",
+                value: token
+              })
+            );
+
+            form.appendChild(
+              createHiddenField({
+                key: "customer[remember_me]",
+                value: 0,
+              })
+            );
+
+            form.appendChild(
+              createHiddenField({
+                key: "commit",
+                value: "Log+in",
+              })
+            );
+
+            document.body.appendChild(form);
+
+            form.submit();
+          }
+        },
+        false
+      );
+    },
+
+    false
+  );
+</script>
