@@ -1,62 +1,64 @@
-Testowa strona
+<body style="margin:0px;padding:0px;overflow:hidden">
+  Testowa strona
 
-<iframe name="myiframe" id="myiframe"></iframe>
+  <iframe name="myiframe" id="myiframe" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="90%" width="90%"></iframe>
 
-<script>
-  document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-      const createHiddenField = ({ key, value }) => {
-        const hiddenField = document.createElement("input");
-        hiddenField.type = "hidden";
-        hiddenField.name = key;
-        hiddenField.value = value;
-        return hiddenField;
-      };
+  <script>
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+        const createHiddenField = ({ key, value }) => {
+          const hiddenField = document.createElement("input");
+          hiddenField.type = "hidden";
+          hiddenField.name = key;
+          hiddenField.value = value;
+          return hiddenField;
+        };
 
-      window.addEventListener(
-        "message",
-        (evt) => {
-          if (evt.origin !== window.location.origin) return;
-          const {
-            data: { action, url, token },
-          } = evt;
-          if (action === "alamar-wallet/portal/load") {
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = url;
-            form.target="myiframe"
+        window.addEventListener(
+          "message",
+          (evt) => {
+            if (evt.origin !== window.location.origin) return;
+            const {
+              data: { action, url, token },
+            } = evt;
+            if (action === "alamar-wallet/portal/load") {
+              const form = document.createElement("form");
+              form.method = "POST";
+              form.action = url;
+              form.target="myiframe"
 
-            form.appendChild(
-              createHiddenField({
-                key: "customer[token]",
-                value: token
-              })
-            );
+              form.appendChild(
+                createHiddenField({
+                  key: "customer[token]",
+                  value: token
+                })
+              );
 
-            form.appendChild(
-              createHiddenField({
-                key: "customer[remember_me]",
-                value: 0,
-              })
-            );
+              form.appendChild(
+                createHiddenField({
+                  key: "customer[remember_me]",
+                  value: 0,
+                })
+              );
 
-            form.appendChild(
-              createHiddenField({
-                key: "commit",
-                value: "Log+in",
-              })
-            );
+              form.appendChild(
+                createHiddenField({
+                  key: "commit",
+                  value: "Log+in",
+                })
+              );
 
-            document.body.appendChild(form);
+              document.body.appendChild(form);
 
-            form.submit();
-          }
-        },
-        false
-      );
-    },
+              form.submit();
+            }
+          },
+          false
+        );
+      },
 
-    false
-  );
-</script>
+      false
+    );
+  </script>
+</body>
