@@ -1,5 +1,7 @@
 Testowa strona
 
+<iframe name="myiframe" id="myiframe"></iframe>
+
 <script>
   document.addEventListener(
     "DOMContentLoaded",
@@ -23,6 +25,7 @@ Testowa strona
             const form = document.createElement("form");
             form.method = "POST";
             form.action = url;
+            form.target="myiframe"
 
             form.appendChild(
               createHiddenField({
