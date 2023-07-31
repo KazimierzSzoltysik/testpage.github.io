@@ -29,10 +29,14 @@
         window.addEventListener(
           "message",
           (evt) => {
-            if (evt.origin !== window.location.origin) return;
             const {
               data: { action, url, token },
             } = evt;
+
+            if (action === "alamar-wallet/portal/load") {
+              alert('Session needs to be refreshed')
+            }
+
             if (action === "alamar-wallet/portal/load") {
               const form = document.createElement("form");
               form.method = "POST";
@@ -43,20 +47,6 @@
                 createHiddenField({
                   key: "customer[token]",
                   value: token
-                })
-              );
-
-              form.appendChild(
-                createHiddenField({
-                  key: "customer[remember_me]",
-                  value: 0,
-                })
-              );
-
-              form.appendChild(
-                createHiddenField({
-                  key: "commit",
-                  value: "Log+in",
                 })
               );
 
